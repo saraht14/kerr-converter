@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 
@@ -6,5 +5,5 @@ import pandas as pd
 df = pd.read_csv('product_mapping.csv')
 
 # Display the dataframe in the Streamlit app
-st.title('Product Mapping Viewer')
+st.title('Product Mapping')
 st.write(df)
