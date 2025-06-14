@@ -1,24 +1,21 @@
 import streamlit as st
 import pandas as pd
 
-# Load the product mapping CSV file
-product_mapping = pd.read_csv('product_mapping.csv')
+# Load the product mapping CSV (note the double .csv)
+product_mapping = pd.read_csv('product_mapping.csv.csv')
 
-# Streamlit app
-st.title('Product Number Conversion App')
+# Streamlit app layout
+st.title("Kerr Product Number Finder")
 
-# Input field for Manufacturer Product Number
-manufacturer_number = st.text_input("Enter Manufacturer Product Number:")
+# Text input for Manufacturer Product Number
+user_input = st.text_input("Enter Manufacturer Product Number:")
 
-if manufacturer_number:
-    # Look up the Manufacturer Product Number in the product mapping
-    result = product_mapping[product_mapping['Manufacturer_Product_Number'] == manufacturer_number]
+# Search and display result
+if user_input:
+    result = product_mapping[product_mapping['Manufacturer_Product_Number'].str.strip().str.upper() == user_input.strip().upper()]
     
     if not result.empty:
-        # Display the corresponding Kerr Product Number and Manufacturer
-        kerr_number = result['Kerr_Product_Number'].values[0]
-        manufacturer = result['Manufacturer'].values[0]
-        st.success(f"Kerr Product Number: {kerr_number}")
-        st.success(f"Manufacturer: {manufacturer}")
+        st.success(f"Kerr Product Number: {result.iloc[0]['Kerr_Product_Number']}")
+        st.write(f"Manufacturer: {result.iloc[0]['Manufacturer']}")
     else:
-        st.error("Manufacturer Product Number not found.")
+        st.error("No matching product found.")
